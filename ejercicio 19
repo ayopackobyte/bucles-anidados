@@ -30,7 +30,7 @@ class Ejercicio19
         // ── Validar que nombres coincidan con filas ───────────
         if (nombres.Length != notas.GetLength(0))
         {
-            Console.WriteLine("  ✘ Error: la cantidad de nombres no coincide con las filas.");
+            Console.WriteLine("  Error: la cantidad de nombres no coincide con las filas.");
             return;
         }
 
@@ -39,7 +39,7 @@ class Ejercicio19
         // ── Validar que haya asignaturas registradas ──────────
         if (columnas == 0)
         {
-            Console.WriteLine("  ✘ Error: no hay asignaturas registradas en la matriz.");
+            Console.WriteLine("  Error: no hay asignaturas registradas en la matriz.");
             return;
         }
 
@@ -62,7 +62,7 @@ class Ejercicio19
             double promedio = suma / columnas;
 
             // ── Mostrar resultado con estado de aprobación ────
-            string estado = promedio >= 70 ? "✔ Aprobado" : "✘ Reprobado";
+            string estado = promedio >= 70 ? " Aprobado" :" Reprobado";
             Console.WriteLine($"  {nombres[i],-8}: {promedio,5:F2}  {estado}");
 
             // ── Registrar al estudiante con mejor promedio ────
