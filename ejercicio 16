@@ -1,0 +1,83 @@
+// ============================================================
+//  EJERCICIO 16 — Contar estudiantes con nota superior a X
+//  Descripción: En un sistema de evaluación, determina cuántos
+//               estudiantes tienen notas superiores a un valor
+//               dado (umbral ingresado por el usuario).
+// ============================================================
+
+using System;
+
+class Ejercicio16
+{
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.WriteLine(" EJERCICIO 16 — Notas superiores a un valor dado   ");
+
+        // Matriz de notas: 4 estudiantes × 3 asignaturas
+        double[,] notas =
+        {
+            { 85, 72, 90 },
+            { 55, 63, 48 },
+            { 91, 88, 77 },
+            { 40, 52, 68 }
+        };
+
+        // ── Mostrar la matriz original ────────────────────────
+        Console.WriteLine("\nMatriz de notas (4 estudiantes × 3 asignaturas):");
+        ImprimirMatriz(notas);
+
+        // ── Solicitar umbral con validación ──────────────────
+        double valor = 0;
+        bool entradaValida = false;
+
+        while (!entradaValida)
+        {
+            Console.Write("\nIngrese el valor umbral (0 – 100): ");
+            string entrada = Console.ReadLine();
+
+            if (!double.TryParse(entrada, out valor))
+            {
+                Console.WriteLine("  ✘ Error: ingrese un número válido.");
+                continue;
+            }
+            if (valor < 0 || valor > 100)
+            {
+                Console.WriteLine("  ✘ Error: el valor dado debe estar entre 0 y 100.");
+                continue;
+            }
+            entradaValida = true;
+        }
+
+        // ── Contar notas superiores al umbral ────────────────
+        int contador = 0;
+        int totalCeldas = notas.GetLength(0) * notas.GetLength(1);
+
+        for (int i = 0; i < notas.GetLength(0); i++)
+            for (int j = 0; j < notas.GetLength(1); j++)
+                if (notas[i, j] > valor)
+                    contador++;
+
+        // ── Resultados ───────────────────────────────────────
+        Console.WriteLine($"\n  Valor establecido : {valor}");
+        Console.WriteLine($"  Total de notas     : {totalCeldas}");
+        Console.WriteLine($"  Notas superiores   : {contador}");
+        Console.WriteLine($"  Notas ≤ Valor     : {totalCeldas - contador}");
+    }
+
+    // ── Utilidad: imprimir matriz con formato de tabla ────────
+    static void ImprimirMatriz(double[,] matriz)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            Console.Write("  [ ");
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                Console.Write($"{matriz[i, j],6:F1}");
+                if (j < matriz.GetLength(1) - 1) Console.Write("  ");
+            }
+            Console.WriteLine("  ]");
+        }
+    }
+}
