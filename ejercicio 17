@@ -21,7 +21,7 @@ class Ejercicio17
         // ── Validar que el arreglo no esté vacío ─────────────
         if (productos.Length == 0)
         {
-            Console.WriteLine("  ✘ El arreglo está vacío. No hay nada que invertir.");
+            Console.WriteLine(" El arreglo está vacío. No hay nada que invertir.");
             return;
         }
 
