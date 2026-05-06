@@ -1,0 +1,103 @@
+// ============================================================
+//  EJERCICIO 17 — Invertir la matriz (orden inverso de filas)
+//  Descripción: Una lista de productos necesita mostrarse en
+//               orden inverso. Se invierte el arreglo usando
+//               intercambio in-place (two-pointer).
+// ============================================================
+
+using System;
+
+class Ejercicio17
+{
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.WriteLine("  EJERCICIO 17 — Inversión de la matriz           ");
+
+        // Arreglo unidimensional de precios de productos
+        double[] productos = { 120.5, 350.0, 89.9, 475.0, 210.3, 60.0 };
+
+        // ── Validar que el arreglo no esté vacío ─────────────
+        if (productos.Length == 0)
+        {
+            Console.WriteLine("  ✘ El arreglo está vacío. No hay nada que invertir.");
+            return;
+        }
+
+        Console.WriteLine("\nLista original de productos (precios):");
+        ImprimirArreglo(productos);
+
+        // ── Invertir usando intercambio in-place ─────────────
+        // Se intercambia el primer elemento con el último,
+        // el segundo con el penúltimo, y así sucesivamente
+        // hasta que los punteros se cruzan en el centro.
+        int inicio = 0;
+        int fin = productos.Length - 1;
+
+        while (inicio < fin)
+        {
+            double temp = productos[inicio];
+            productos[inicio] = productos[fin];
+            productos[fin] = temp;
+            inicio++;
+            fin--;
+        }
+
+        Console.WriteLine("\nLista invertida de productos:");
+        ImprimirArreglo(productos);
+
+        // ── Demostración extra: invertir filas en matriz 3×3 ──
+        Console.WriteLine("\n  — Inversión de filas en una matriz 3×3 —");
+
+        double[,] matriz =
+        {
+            { 1, 2, 3 },
+            { 4, 5, 6 },
+            { 7, 8, 9 }
+        };
+
+        Console.WriteLine("\nMatriz original:");
+        ImprimirMatriz(matriz);
+
+        int totalFilas = matriz.GetLength(0);
+        int totalCols = matriz.GetLength(1);
+
+        // Crear matriz resultado y copiar filas en orden inverso
+        double[,] invertida = new double[totalFilas, totalCols];
+
+        for (int i = 0; i < totalFilas; i++)
+            for (int j = 0; j < totalCols; j++)
+                invertida[i, j] = matriz[totalFilas - 1 - i, j];
+
+        Console.WriteLine("\nMatriz con filas invertidas:");
+        ImprimirMatriz(invertida);
+    }
+
+    // ── Utilidad: imprimir arreglo 1D ─────────────────────────
+    static void ImprimirArreglo(double[] arreglo)
+    {
+        Console.Write("  [ ");
+        for (int i = 0; i < arreglo.Length; i++)
+        {
+            Console.Write($"{arreglo[i],6:F1}");
+            if (i < arreglo.Length - 1) Console.Write("  ");
+        }
+        Console.WriteLine("  ]");
+    }
+
+    // ── Utilidad: imprimir matriz 2D ──────────────────────────
+    static void ImprimirMatriz(double[,] matriz)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            Console.Write("  [ ");
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                Console.Write($"{matriz[i, j],6:F1}");
+                if (j < matriz.GetLength(1) - 1) Console.Write("  ");
+            }
+            Console.WriteLine("  ]");
+        }
+    }
+}
