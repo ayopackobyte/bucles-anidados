@@ -32,7 +32,7 @@ class Ejercicio20
         // ── Validar que la matriz tenga elementos ─────────────
         if (total == 0)
         {
-            Console.WriteLine("  ✘ La matriz de encuesta está vacía.");
+            Console.WriteLine(" La matriz de encuesta está vacía.");
             return;
         }
 
