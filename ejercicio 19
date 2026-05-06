@@ -1,0 +1,94 @@
+// ============================================================
+//  EJERCICIO 19 — Promedio de notas por estudiante (por fila)
+//  Descripción: Una escuela desea conocer el promedio de cada
+//               estudiante calculando la media de cada fila
+//               de la matriz de notas.
+// ============================================================
+
+using System;
+
+class Ejercicio19
+{
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.WriteLine("  EJERCICIO 19 — Promedio por estudiante (fila)   ");
+
+        // Matriz: 5 estudiantes × 4 asignaturas
+        double[,] notas =
+        {
+            { 88, 74, 90, 82 },
+            { 55, 60, 48, 70 },
+            { 92, 85, 91, 78 },
+            { 40, 55, 63, 50 },
+            { 76, 80, 72, 88 }
+        };
+
+        string[] nombres = { "Carlos", "Marcelo", "Yasser ", "Joaquin", "Daniela" };
+
+        // ── Validar que nombres coincidan con filas ───────────
+        if (nombres.Length != notas.GetLength(0))
+        {
+            Console.WriteLine("  ✘ Error: la cantidad de nombres no coincide con las filas.");
+            return;
+        }
+
+        int columnas = notas.GetLength(1);
+
+        // ── Validar que haya asignaturas registradas ──────────
+        if (columnas == 0)
+        {
+            Console.WriteLine("  ✘ Error: no hay asignaturas registradas en la matriz.");
+            return;
+        }
+
+        Console.WriteLine("\nMatriz de notas (5 estudiantes × 4 asignaturas):");
+        ImprimirMatriz(notas);
+
+        Console.WriteLine("\n  Promedios por estudiante:");
+        Console.WriteLine("  ─────────────────────────────────────────");
+
+        double mejorPromedio = double.MinValue;
+        string mejorEstudiante = "";
+
+        for (int i = 0; i < notas.GetLength(0); i++)
+        {
+            // ── Sumar todas las notas de la fila i ───────────
+            double suma = 0;
+            for (int j = 0; j < columnas; j++)
+                suma += notas[i, j];
+
+            double promedio = suma / columnas;
+
+            // ── Mostrar resultado con estado de aprobación ────
+            string estado = promedio >= 70 ? "✔ Aprobado" : "✘ Reprobado";
+            Console.WriteLine($"  {nombres[i],-8}: {promedio,5:F2}  {estado}");
+
+            // ── Registrar al estudiante con mejor promedio ────
+            if (promedio > mejorPromedio)
+            {
+                mejorPromedio = promedio;
+                mejorEstudiante = nombres[i];
+            }
+        }
+
+        Console.WriteLine("  ─────────────────────────────────────────");
+        Console.WriteLine($"\n  Mejor promedio: {mejorEstudiante} con {mejorPromedio:F2}");
+    }
+
+    // ── Utilidad: imprimir matriz con formato de tabla ────────
+    static void ImprimirMatriz(double[,] matriz)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            Console.Write("  [ ");
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                Console.Write($"{matriz[i, j],6:F1}");
+                if (j < matriz.GetLength(1) - 1) Console.Write("  ");
+            }
+            Console.WriteLine("  ]");
+        }
+    }
+}
