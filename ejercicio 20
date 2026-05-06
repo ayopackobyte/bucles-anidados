@@ -1,0 +1,89 @@
+// ============================================================
+//  EJERCICIO 20 — Porcentaje de respuestas positivas
+//  Descripción: En una encuesta, calcular qué porcentaje del
+//               total de respuestas son positivas (valor > 0),
+//               neutrales (= 0) y negativas (< 0).
+// ============================================================
+
+using System;
+
+class Ejercicio20
+{
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.WriteLine("  EJERCICIO 20 — % de respuestas positivas        ");
+
+        // Matriz de encuesta: 1 = positiva | 0 = neutral | -1 = negativa
+        int[,] encuesta =
+        {
+            {  1,  0,  1,  1 },
+            { -1,  1,  0,  1 },
+            {  1, -1,  1,  0 },
+            {  0,  1,  1, -1 },
+            {  1,  1,  0,  1 }
+        };
+
+        int filas = encuesta.GetLength(0);
+        int columnas = encuesta.GetLength(1);
+        int total = filas * columnas;
+
+        // ── Validar que la matriz tenga elementos ─────────────
+        if (total == 0)
+        {
+            Console.WriteLine("  ✘ La matriz de encuesta está vacía.");
+            return;
+        }
+
+        // ── Mostrar la matriz de encuesta ─────────────────────
+        Console.WriteLine("\nMatriz de encuesta ( 1=positivo | 0=neutral | -1=negativo ):");
+
+        for (int i = 0; i < filas; i++)
+        {
+            Console.Write("  [ ");
+            for (int j = 0; j < columnas; j++)
+            {
+                Console.Write($"{encuesta[i, j],3}");
+                if (j < columnas - 1) Console.Write("  ");
+            }
+            Console.WriteLine("  ]");
+        }
+
+        // ── Contar respuestas por categoría ───────────────────
+        int positivas = 0;
+        int neutras = 0;
+        int negativas = 0;
+
+        for (int i = 0; i < filas; i++)
+        {
+            for (int j = 0; j < columnas; j++)
+            {
+                if (encuesta[i, j] > 0) positivas++;
+                else if (encuesta[i, j] < 0) negativas++;
+                else neutras++;
+            }
+        }
+
+        // ── Calcular porcentajes ──────────────────────────────
+        double pctPositivas = (double)positivas / total * 100;
+        double pctNeutras = (double)neutras / total * 100;
+        double pctNegativas = (double)negativas / total * 100;
+
+        // ── Mostrar resultados ────────────────────────────────
+        Console.WriteLine($"\n  Total de respuestas : {total}");
+        Console.WriteLine("  ─────────────────────────────────────────");
+        Console.WriteLine($"  Positivas  : {positivas,3}  →  {pctPositivas,6:F2} %");
+        Console.WriteLine($"  Neutrales  : {neutras,3}  →  {pctNeutras,6:F2} %");
+        Console.WriteLine($"  Negativas  : {negativas,3}  →  {pctNegativas,6:F2} %");
+        Console.WriteLine("  ─────────────────────────────────────────");
+
+        // ── Evaluación general de la encuesta ─────────────────
+        string evaluacion;
+        if (pctPositivas >= 70) evaluacion = " Resultado FAVORABLE";
+        else if (pctPositivas >= 40) evaluacion = " Resultado MODERADO";
+        else evaluacion = " Resultado DESFAVORABLE";
+
+        Console.WriteLine($"\n  Evaluación: {evaluacion}  ({pctPositivas:F1} % positivas)");
+    }
+}
