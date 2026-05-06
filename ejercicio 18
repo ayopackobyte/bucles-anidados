@@ -1,0 +1,71 @@
+// ============================================================
+//  EJERCICIO 18 — Reemplazar valores negativos por cero
+//  Descripción: En un sistema financiero, las deudas (valores
+//               negativos) deben sanearse reemplazándolas con
+//               cero para el reporte final.
+// ============================================================
+
+using System;
+
+class Ejercicio18
+{
+    static void Main(string[] args)
+    {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        Console.WriteLine("  EJERCICIO 18 — Eliminar valores negativos       ");
+
+        // Matriz financiera con balances (pueden ser negativos)
+        double[,] balances =
+        {
+            {  1500.0, -300.5,   870.0 },
+            { -200.0,   450.0,  -125.0 },
+            {   320.5,  -90.0,  1200.0 }
+        };
+
+        // ── Validar que la matriz tenga elementos ─────────────
+        if (balances.GetLength(0) == 0 || balances.GetLength(1) == 0)
+        {
+            Console.WriteLine("  ✘ La matriz está vacía.");
+            return;
+        }
+
+        Console.WriteLine("\nBalances originales (negativos = deudas):");
+        ImprimirMatriz(balances);
+
+        // ── Recorrer y reemplazar todos los negativos ─────────
+        int negativosReemplazados = 0;
+
+        for (int i = 0; i < balances.GetLength(0); i++)
+        {
+            for (int j = 0; j < balances.GetLength(1); j++)
+            {
+                if (balances[i, j] < 0)
+                {
+                    balances[i, j] = 0;      // Sanear deuda
+                    negativosReemplazados++;
+                }
+            }
+        }
+
+        Console.WriteLine("\nBalances saneados (deudas → 0):");
+        ImprimirMatriz(balances);
+
+        Console.WriteLine($"\n  Valores negativos reemplazados: {negativosReemplazados}");
+    }
+
+    // ── Utilidad: imprimir matriz con formato de tabla ────────
+    static void ImprimirMatriz(double[,] matriz)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            Console.Write("  [ ");
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                Console.Write($"{matriz[i, j],8:F1}");
+                if (j < matriz.GetLength(1) - 1) Console.Write("  ");
+            }
+            Console.WriteLine("  ]");
+        }
+    }
+}
